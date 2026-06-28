@@ -36,11 +36,8 @@ menu = st.sidebar.selectbox(
 if menu == "Pengantar & Sejarah":
     st.subheader("📚 Jembatan Dua Disiplin Ilmu")
     st.write("""
-    Aplikasi ini dirancang sebagai alat bantu ajar interaktif untuk menjembatani **Ekonomi Neoklasikal** 
-    (yang berfokus pada hasil akhir pilihan/*Revealed Preference*) dan **Cognitive Neuroscience** 
-    (yang berfokus pada proses algoritma biologis di dalam otak).
+    Aplikasi ini dirancang sebagai alat bantu ajar interaktif untuk menjembatani **Ekonomi Neoklasikal** (yang berfokus pada hasil akhir pilihan/*Revealed Preference*) dan **Cognitive Neuroscience** (yang berfokus pada proses algoritma biologis di dalam otak).
     """)
-    st.image("image_ee5e9a.jpg", caption="Repositori GitHub Proyek Pembelajaran Kita", use_container_width=True)
 
 # ==================================================================
 # MODUL 1: TEORI KEPUTUSAN AKSIOMATIK (BAB 3 & 4)
