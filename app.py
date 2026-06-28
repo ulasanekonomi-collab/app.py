@@ -6,7 +6,7 @@ st.set_page_config(page_title="Neuroeconomics Lab", page_icon="🧠", layout="wi
 
 # Header Aplikasi
 st.title("🧠 Neuroeconomics Interactive Learning App")
-st.caption("Memahami bagaimana otak Anda mengambil keputusan ekonomi | Oleh: Kang Yuhka & Mamang")
+st.caption("Memahami bagaimana otak Anda mengambil keputusan ekonomi | Oleh: Yuhka Sundaya")
 st.markdown("---")
 
 # Sidebar untuk Navigasi
