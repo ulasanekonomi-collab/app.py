@@ -3,175 +3,237 @@ import numpy as np
 import pandas as pd
 import plotly.express as px
 
-# 1. KONFIGURASI HALAMAN
-st.set_page_config(page_title="Aplikasi Pembelajaran Neuroeconomics", page_icon="🧠", layout="wide")
+# ==================================================================
+# 1. KONFIGURASI HALAMAN & THEME ELEGAN
+# ==================================================================
+st.set_page_config(
+    page_title="Neuroeconomics Lab", 
+    page_icon="🧠", 
+    layout="wide",
+    initial_sidebar_state="expanded"
+)
 
-# Gaya CSS Khusus
+# Custom CSS untuk menyulap UI Streamlit menjadi tatap muka profesional
 st.markdown("""
     <style>
-    .main-title { font-size:32px; font-weight:bold; color:#2E4053; margin-bottom:5px; }
-    .subtitle { font-size:18px; color:#5D6D7E; margin-bottom:20px; }
-    .brain-box { padding:15px; background-color:#FBEEE6; border-left:6px solid #E67E22; border-radius:4px; margin-bottom:15px; }
+    /* Mengubah font global ke inter/sans-serif */
+    html, body, [data-testid="stSidebarView"] {
+        font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    }
+    
+    /* Desain Banner Atas */
+    .hero-banner {
+        background: linear-gradient(135deg, #1A252C 0%, #2C3E50 100%);
+        padding: 30px;
+        border-radius: 8px;
+        color: #FFFFFF;
+        margin-bottom: 25px;
+        box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+    }
+    .hero-title { font-size: 30px; font-weight: 700; margin-bottom: 5px; letter-spacing: -0.5px; }
+    .hero-subtitle { font-size: 15px; color: #BDC3C7; }
+    
+    /* Desain Kartu Teori (Academic Card) */
+    .theory-card {
+        background-color: #F8F9F9;
+        border: 1px solid #E5E8E8;
+        border-left: 4px solid #2980B9;
+        padding: 20px;
+        border-radius: 6px;
+        margin-bottom: 20px;
+    }
+    
+    /* Desain Insights Box */
+    .insight-box {
+        background-color: #EBF5FB;
+        border: 1px solid #AED6F1;
+        padding: 15px;
+        border-radius: 6px;
+        margin-top: 15px;
+    }
     </style>
 """, unsafe_allow_html=True)
 
-st.markdown('<p class="main-title">🧠 Neuroeconomics Interactive Learning Laboratory</p>', unsafe_allow_html=True)
-st.markdown('<p class="subtitle">Mengintegrasikan Model Formal Ekonomi dengan Sistem Kognitif Otak (Referensi: Glimcher et al., 2009)</p>', unsafe_allow_html=True)
-st.markdown("---")
+# ==================================================================
+# 2. BANNER UTAMA
+# ==================================================================
+st.markdown("""
+    <div class="hero-banner">
+        <div class="hero-title">🧠 Neuroeconomics Interactive Lab</div>
+        <div class="hero-subtitle">Platform Pembelajaran Proses Mekanisme Biologis dalam Pengambilan Keputusan Ekonomi</div>
+    </div>
+""", unsafe_allow_html=True)
 
-# 2. NAVIGASI UTAMA (BERDASARKAN STRUKTUR BAB BUKU)
+# ==================================================================
+# 3. SIDEBAR & NAVIGASI
+# ==================================================================
+st.sidebar.markdown("### 🗺️ Modul Akademik")
 menu = st.sidebar.selectbox(
-    "Pilih Modul Pembelajaran:",
+    "Pilih Topik Pembelajaran:",
     [
-        "Pengantar & Sejarah",
-        "Modul 1: Teori Keputusan Aksiomatik (Bab 3 & 4)",
-        "Modul 2: Teori Permainan Non-Kooperatif (Bab 5 & 6)",
-        "Modul 3: Reward Prediction Error / RPE (Bab 3)"
-    ]
+        "1. Pengantar & Model Paradigma",
+        "2. Pilihan Aksiomatik & Risiko (Bab 3-4)",
+        "3. Interaksi Sosial & Game Theory (Bab 5-6)",
+        "4. Reward Prediction Error (Bab 3)"
+    ],
+    label_visibility="collapsed"
 )
 
-# ==================================================================
-# MODUL PENGANTAR
-# ==================================================================
-if menu == "Pengantar & Sejarah":
-    st.subheader("📚 Jembatan Dua Disiplin Ilmu")
-    st.write("""
-    Aplikasi ini dirancang sebagai alat bantu ajar interaktif untuk menjembatani **Ekonomi Neoklasikal** (yang berfokus pada hasil akhir pilihan/*Revealed Preference*) dan **Cognitive Neuroscience** (yang berfokus pada proses algoritma biologis di dalam otak).
-    """)
+st.sidebar.markdown("---")
+st.sidebar.caption("Syllabus Reference:\n*Neuroeconomics: Decision Making and the Brain* (Glimcher et al.)")
 
 # ==================================================================
-# MODUL 1: TEORI KEPUTUSAN AKSIOMATIK (BAB 3 & 4)
+# KONTEN MODUL 1: PENGANTAR
 # ==================================================================
-elif menu == "Modul 1: Teori Keputusan Aksiomatik (Bab 3 & 4)":
-    st.header("⚖️ Eksperimen Maksimisasi Utilitas & Risiko Dinamis")
-    st.write("""
-    Berdasarkan Bab 4 (Aldo Rustichini), otak kita memproses keputusan ekonomi melalui dua tahap: 
-    **Evaluasi Nilai (Utilitas)** dan **Komparasi Kuantitas** melalui model *Random Walk* dengan hambatan endogen.
-    """)
+if menu == "1. Pengantar & Model Paradigma":
+    st.markdown("### 📚 Menjembatani Utilitas Abstrak dengan Aktivitas Saraf")
     
-    st.subheader("Simulasi Lotere Von Neumann-Morgenstern")
-    col1, col2 = st.columns([1, 2])
+    col_left, col_right = st.columns([3, 2])
+    
+    with col_left:
+        st.write("""
+        Selamat datang di Laboratorium Interaktif Neuroeconomics. Alat bantu ajar ini dirancang untuk membongkar kotak hitam (*black box*) pemikiran manusia saat berhadapan dengan insentif ekonomi. 
+        
+        Ekonomi neoklasik selama ini bertumpu pada asas *Revealed Preference*—menilai keputusan hanya dari apa yang dipilih. Sebaliknya, *Neuroeconomics* masuk lebih dalam untuk memetakan algoritma biologis yang terjadi di dalam sirkuit otak sebelum pilihan itu dieksekusi.
+        """)
+        
+        st.markdown("""
+        <div class="theory-card">
+            <h4>Tiga Pilar Fondasi Pendekatan:</h4>
+            <ol>
+                <li><strong>Ekonomi:</strong> Menyediakan kerangka formal matematika dan konseptual (utilitas, maksimisasi, efisiensi).</li>
+                <li><strong>Psikologi:</strong> Menyediakan pemahaman bias perilaku empiris, heuristik, dan keterbatasan kognitif.</li>
+                <li><strong>Neurosains:</strong> Menyediakan alat ukur fisik sirkuit komputasi biologis (fMRI, single-unit recording, neurotransmiter).</li>
+            </ol>
+        </div>
+        """, unsafe_allow_html=True)
+
+    with col_right:
+        st.markdown("### 🗺️ Arsitektur Sirkuit Pengambilan Keputusan")
+        st.write("Secara mendasar, informasi dalam neuroekonomi mengalir melalui sirkuit berikut:")
+        
+
+# ==================================================================
+# KONTEN MODUL 2: TEORI KEPUTUSAN AKSIOMATIK
+# ==================================================================
+elif menu == "2. Pilihan Aksiomatik & Risiko (Bab 3-4)":
+    st.markdown("### ⚖️ Komputasi Risiko dan Kurva Utilitas Subjektif")
+    
+    st.markdown("""
+    <div class="theory-card">
+        Berdasarkan Bab 4 (Aldo Rustichini), otak tidak memproses angka kuantitatif mentah dari nilai uang, melainkan menerjemahkannya ke dalam skala representasi internal. Proses ini melibatkan pemetaan utilitas di area <strong>Lateral Intraparietal (LIP)</strong>.
+    </div>
+    """, unsafe_allow_html=True)
+    
+    col1, col2 = st.columns([2, 3])
     
     with col1:
-        st.write("**Atur Parameter Lotere Anda:**")
-        p_jackpot = st.slider("Probabilitas Mendapat Jackpot (p)", 0.0, 1.0, 0.5, 0.05)
-        val_jackpot = st.number_input("Nilai Uang Jackpot (Rp)", value=500000, step=50000)
-        alpha = st.slider("Tingkat Risk Aversion (α) | 1=Rasional murni, <1=Takut Risiko", 0.1, 1.0, 0.7, 0.05)
+        st.markdown("##### ⚙️ Parameter Simulator")
+        p_jackpot = st.slider("Probabilitas Hasil (p)", 0.0, 1.0, 0.5, 0.05)
+        val_jackpot = st.number_input("Nilai Nominal Hadiah (Rp)", value=500000, step=50000)
+        alpha = st.slider("Tingkat Risk Aversion (α)", 0.1, 1.0, 0.7, 0.05)
         
-        # Perhitungan Nilai Utilitas Berdasarkan Fungsi Kekayaan Khas Ekonomi Perilaku
         expected_value = p_jackpot * val_jackpot
         utility = p_jackpot * (val_jackpot ** alpha)
         
+        st.markdown("---")
+        st.metric(label="Expected Value (Objektif)", value=f"Rp {expected_value:,.0f}")
+        st.metric(label="Aktivitas Saraf / Utilitas Subjektif", value=f"{utility:,.2f} Unit")
+
     with col2:
-        st.metric(label="Nilai Harapan Objektif (Expected Value)", value=f"Rp {expected_value:,.0f}")
-        st.metric(label="Utilitas Subjektif di Otak (U)", value=f"{utility:,.2f} unit")
-        
-        # Plotting Kurva Utilitas Noisy perception
         x_vals = np.linspace(0, 1000000, 100)
         y_vals = x_vals ** alpha
         df_curve = pd.DataFrame({'Nilai Uang': x_vals, 'Utilitas': y_vals})
-        fig = px.line(df_curve, x='Nilai Uang', y='Utilitas', title="Fungsi Utilitas Subjektif Otak")
+        
+        fig = px.line(df_curve, x='Nilai Uang', y='Utilitas', title="Kurva Utilitas Subjektif (Representasi di Otak)")
+        fig.update_traces(line_color='#2980B9', line_width=3)
+        fig.update_layout(
+            plot_bgcolor='white',
+            paper_bgcolor='white',
+            margin=dict(l=20, r=20, t=40, b=20),
+            xaxis=dict(showgrid=True, gridcolor='#E5E8E8'),
+            yaxis=dict(showgrid=True, gridcolor='#E5E8E8')
+        )
         st.plotly_chart(fig, use_container_width=True)
 
-    st.markdown("""
-    <div class="brain-box">
-        <strong>🧠 Catatan Neurosains (Bab 4):</strong><br>
-        Ketika Anda mengubah parameter risiko di atas, rekaman unit tunggal pada primata menunjukkan 
-        bahwa <strong>Lateral Intraparietal Area (Area LIP)</strong> bertugas memetakan peta utilitas 
-        terhadap ruang visual target pilihan tersebut.
-    </div>
-    """, unsafe_allow_html=True)
-
 # ==================================================================
-# MODUL 2: TEORI PERMAINAN NON-KOOPERATIF (BAB 5 & 6)
+# KONTEN MODUL 3: GAME THEORY
 # ==================================================================
-elif menu == "Modul 2: Teori Permainan Non-Kooperatif (Bab 5 & 6)":
-    st.header("🎮 Laboratorium Game Theory Eksperimental")
-    st.write("Eksperimen interaktif interaksi sosial menggunakan basis data empiris Bab 5 & 6.")
+elif menu == "3. Interaksi Sosial & Game Theory (Bab 5-6)":
+    st.markdown("### 🎮 Laboratorium Game Theory Eksperimental")
     
-    game_choice = st.selectbox("Pilih Jenis Permainan:", ["The Ultimatum Game (Bargaining)", "The Trust Game (Reciprocity)"])
+    game_choice = st.tabs(["The Ultimatum Game (Bargaining)", "The Trust Game (Reciprocity)"])
     
-    if game_choice == "The Ultimatum Game (Bargaining)":
-        st.subheader("Skenario: Pembagian Uang Rp 1.000.000")
-        st.warning("Bot menawarkan pembagian tidak adil: **Bot ambil Rp 800.000, Anda diberi Rp 200.000**.")
+    with game_choice[0]:
+        st.write("##### Skenario Pembagian Dana Hibah")
+        st.write("Bot AI menawarkan proposal yang tidak adil: Dari total dana Rp 1.000.000, **Bot mengambil Rp 800.000 dan memberikan Anda Rp 200.000**.")
         
         c1, c2 = st.columns(2)
         with c1:
-            if st.button("✅ Terima Saja"):
-                st.success("Anda memilih rasional secara ekonomi klasik. Logika mengalahkan emosi.")
+            if st.button("✅ Terima Proposal", use_container_width=True):
                 st.markdown("""
-                <div class="brain-box">
-                    <strong>🧠 Analisis Pemindaian fMRI (Sanfey et al., 2003):</strong><br>
-                    Saat menerima tawaran ini, terjadi aktivitas kuat di <strong>Dorsolateral Prefrontal Cortex (dlPFC)</strong> 
-                    yang berfungsi melakukan kendali kognitif untuk menekan emosi negatif demi mendapatkan keuntungan materi.
+                <div class="insight-box">
+                    <h5>🟢 Keputusan Diambil: Menerima</h5>
+                    <p><strong>Analisis Neurokomputasi:</strong> Pilihan ini mencerminkan dominasi <strong>Dorsolateral Prefrontal Cortex (dlPFC)</strong>. Area ini melakukan kendali kognitif tingkat tinggi, menahan emosi negatif dari ketidakadilan demi memaksimalkan hasil ekonomi rasional.</p>
                 </div>
                 """, unsafe_allow_html=True)
         with c2:
-            if st.button("❌ Tolak (Kedua Pihak Dapat Rp 0)"):
-                st.error("Anda menghukum Bot yang serakah meskipun Anda harus rugi uang.")
+            if st.button("❌ Tolak & Hanguskan", use_container_width=True):
                 st.markdown("""
-                <div class="brain-box">
-                    <strong>🧠 Analisis Pemindaian fMRI (Sanfey et al., 2003):</strong><br>
-                    Penolakan ini didorong oleh letupan aktivitas agresif di <strong>Anterior Insula</strong>. 
-                    Area ini memproses rasa muak secara fisik (seperti mencium bau busuk) dan ketidakadilan sosial. 
-                    Jika aktivitas Insula lebih tinggi daripada dlPFC, Anda pasti menolak!
+                <div class="insight-box" style="border-color:#F5B7B1; background-color:#FDF2F4;">
+                    <h5>🔴 Keputusan Diambil: Menolak (Punishment)</h5>
+                    <p><strong>Analisis Neurokomputasi:</strong> Mengapa manusia rela kehilangan uang gratis? Pemindaian fMRI menunjukkan letupan agresif di <strong>Anterior Insula</strong>. Area ini mendeteksi rasa muak (sama seperti mencium bau busuk fisik). Ketika sinyal Insula melampaui ambang batas dlPFC, manusia memilih menderita kerugian materi demi menghukum ketidakadilan (<i>nihil apresiasi</i> terhadap keseragaman sosial).</p>
                 </div>
                 """, unsafe_allow_html=True)
-
-    elif game_choice == "The Trust Game (Reciprocity)":
-        st.subheader("Simulasi Investasi Sosial")
-        dana_kirim = st.slider("Berapa banyak uang yang ingin Anda percayakan/investasikan ke Trustee? (Uang akan dikali 3)", 0, 100000, 50000, 10000)
+                
+    with game_choice[1]:
+        st.write("##### Simulasi Kepercayaan & Resiprositas")
+        dana_kirim = st.slider("Dana yang Anda Percayakan ke Pihak Kedua (Uang otomatis berlipat 3x):", 0, 100000, 50000, 10000)
         
-        if st.button("Kirim Dana"):
-            dana_termultiplikasi = dana_kirim * 3
-            st.info(f"Uang yang diterima Trustee bermutasi menjadi **Rp {dana_termultiplikasi:,.0f}**")
-            
-            # Simulasi respons Bot berbasis probabilitas empiris buku
-            st.success(f"Trustee mengembalikan **Rp {dana_kirim * 1.2:,.0f}** kepada Anda. Investasi sosial Anda berhasil!")
+        if st.button("Kirim Investasi", use_container_width=True):
+            st.info(f"Pihak kedua menerima dana yang termultiplikasi menjadi Rp {dana_kirim*3:,.0f}")
+            st.success(f"Umpan balik: Pihak kedua mengembalikan Rp {dana_kirim*1.2:,.0f} kepada Anda.")
             st.markdown("""
-            <div class="brain-box">
-                <strong>🧠 Mekanisme Hormonal & Neurobiologis (Bab 5):</strong><br>
-                Keputusan untuk mempercayai orang asing diatur oleh neuropeptida <strong>Oxytocin</strong> di dalam otak. 
-                Pemberian oksitosin secara klinis terbukti meningkatkan volume dana investasi tanpa mengubah persepsi risiko subjek.
+            <div class="insight-box">
+                <h5>🧬 Mekanisme Neuromodulator: Oxytocin</h5>
+                <p>Keputusan untuk menaruh kepercayaan (*trust*) pada entitas asing sangat dimodulasi oleh hormon <strong>Oksitosin</strong>. Penelitian empiris menunjukkan peningkatan kadar oksitosin secara sengaja meningkatkan perilaku transfer dana sosial tanpa mengubah kalkulator penilaian risiko umum subjek.</p>
             </div>
             """, unsafe_allow_html=True)
 
 # ==================================================================
-# MODUL 3: REWARD PREDICTION ERROR / RPE (BAB 3)
+# KONTEN MODUL 4: REWARD PREDICTION ERROR
 # ==================================================================
-elif menu == "Modul 3: Reward Prediction Error / RPE (Bab 3)":
-    st.header("⚡ Sirkuit Dopaminergik & Algoritma Pembelajaran Otak")
-    st.write("""
-    Berdasarkan Bab 3 (Andrew Caplin & Mark Dean), salah satu penemuan terbesar neuroeconomics adalah pembuktian bahwa 
-    sistem dopamin otak tidak mengodekan 'hadiah statis', melainkan **Reward Prediction Error (RPE)**.
-    """)
+elif menu == "4. Reward Prediction Error (Bab 3)":
+    st.markdown("### ⚡ Sistem Dopaminergik & Algoritma Pembelajaran Otak")
+    st.write("Salah satu pilar mekanistik terpenting dalam buku Paul Glimcher adalah pembuktian fungsi dopamin.")
     
-    st.latex(r"RPE = \text{Reward Aktual} - \text{Reward Ekspektasi}")
+    st.latex(r"\delta = R_{\text{actual}} - V_{\text{predicted}}")
     
-    # Kalkulator Letupan Dopamin
-    st.subheader("Kalkulator Letupan Sirkuit Dopamin")
     col_a, col_b = st.columns(2)
     with col_a:
-        ekspektasi = st.slider("Ekspektasi Anda Terhadap Suatu Hasil", 0, 100, 50)
-        aktual = st.slider("Hasil Aktual yang Anda Terima", 0, 100, 80)
+        st.markdown("##### 🛠️ Kalkulator RPE")
+        ekspektasi = st.slider("Ekspektasi/Prediksi Awal (V)", 0, 100, 50)
+        aktual = st.slider("Hasil Nyata yang Diterima (R)", 0, 100, 80)
         rpe = aktual - ekspektasi
-    
+        
     with col_b:
+        st.markdown("##### 🧬 Respons Sel Saraf")
         if rpe > 0:
-            st.success(f"📈 RPE Positif: +{rpe} | Dopamin meletup di atas *baseline* (Phasic Burst)!")
-            st.write("Otak mendeteksi hasil yang lebih baik dari dugaan. Anda merasa sangat senang/jackpot.")
+            st.success(f"📈 RPE Positif: +{rpe}")
+            st.write(" terjadi letupan frekuensi impuls (*Phasic Burst*) pada sel dopamin di area *Ventral Tegmental Area* (VTA). Ini adalah sinyal biologis untuk memperbarui memori: 'Tindakan ini menghasilkan sesuatu yang lebih baik dari dugaan!'")
         elif rpe == 0:
-            st.info(f"↕️ RPE Nol: {rpe} | Dopamin berjalan di tingkat *baseline* yang stabil.")
-            st.write("Hasil sesuai ekspektasi. Tidak ada kejutan biologis.")
+            st.info(f"↕️ RPE Nol: {rpe}")
+            st.write("Sel dopamin tetap menembakkan impuls pada frekuensi dasar (*tonic baseline*). Tidak ada informasi baru yang perlu dipelajari oleh sirkuit kognitif.")
         else:
-            st.error(f"📉 RPE Negatif: {rpe} | Sel dopamin mengalami pembekuan/jeda (*Dopamine Pause*).")
-            st.write("Hasil di bawah ekspektasi. Muncul sinyal kekecewaan di area *Nucleus Accumbens*.")
+            st.error(f"📉 RPE Negatif: {rpe}")
+            st.write("Terjadi penghentian sementara aktivitas sel (*Dopamine Pause*). Otak mendeteksi kekecewaan, mengirim isyarat sanksi internal agar sirkuit tidak mengulangi strategi pilihan tersebut di masa depan.")
+
 # ==================================================================
-# FOOTER (BAGIAN PALING BAWAH APLIKASI)
+# 4. FOOTER ELEGAN (CLARITY)
 # ==================================================================
-st.markdown("---")  # Membuat garis pemisah tipis
+st.markdown("---")
 st.markdown(
-    '<p style="text-align: center; color: #888888; font-size: 13px;">'
+    '<p style="text-align: center; color: #7F8C8D; font-size: 13px; letter-spacing: 0.5px;">'
     'Dikembangkan oleh Yuhka Sundaya & Dewi Rosiana'
     '</p>', 
     unsafe_allow_html=True
