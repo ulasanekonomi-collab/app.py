@@ -166,3 +166,13 @@ elif menu == "Modul 3: Reward Prediction Error / RPE (Bab 3)":
         else:
             st.error(f"📉 RPE Negatif: {rpe} | Sel dopamin mengalami pembekuan/jeda (*Dopamine Pause*).")
             st.write("Hasil di bawah ekspektasi. Muncul sinyal kekecewaan di area *Nucleus Accumbens*.")
+# ==================================================================
+# FOOTER (BAGIAN PALING BAWAH APLIKASI)
+# ==================================================================
+st.markdown("---")  # Membuat garis pemisah tipis
+st.markdown(
+    '<p style="text-align: center; color: #888888; font-size: 13px;">'
+    'Dikembangkan oleh Yuhka Sundaya & Dewi Rosiana'
+    '</p>', 
+    unsafe_allow_html=True
+)
